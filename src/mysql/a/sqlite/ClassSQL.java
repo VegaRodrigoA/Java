@@ -24,6 +24,8 @@ import javax.swing.JOptionPane;
  *
  * @author rodrigo
  */
+//Esta es una clase que podemos usar para ejecutar en los proyectos que 
+//involucren una base de datos SQLite
 public class ClassSQL {
     
 private String consSQL;
@@ -33,30 +35,33 @@ private Connection conexion = null;
 private PreparedStatement stmt;
 private Statement st;
 
-public String nBaseDatosSC = "/home/rodrigo/Escritorio/Pocholo.db";
-//public String nBaseDatosSC = "//C://Users//Usuario//Desktop//gestion.db";
+//Ponemos la ruta a nuestra base de datos principal
+public String nBaseDatosSC = "Base de datos";
 
-public String nBD2 = "P:\\gestionCerri.rv";
+//Ponemos la ruta a nuestra base de datos secundaria
+public String nBD2 = "Base de datos secundaria";
 
-    public ClassSQL(String nSQL ) {
-        consSQL = nSQL;
-        msjError = "No se pudo ejecutar las sentencia SQL ";
-        
-        try {
-            Class.forName("org.sqlite.JDBC");
-            conexion=DriverManager.getConnection ("jdbc:sqlite:"+nBaseDatosSC);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ClassSQL.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex);
-        } catch (ClassNotFoundException ex) {
+//Creamos la clase principal
+public ClassSQL(String nSQL ) {//nSQL es la sentencia a ejecutar
+    consSQL = nSQL;
+    msjError = "No se pudo ejecutar las sentencia SQL ";//Mensaje de error
+    
+    //Nos conectamos a nuestra base de datos
+    try {
+        Class.forName("org.sqlite.JDBC");
+        conexion=DriverManager.getConnection ("jdbc:sqlite:"+nBaseDatosSC);
+
+    } catch (SQLException ex) {
         Logger.getLogger(ClassSQL.class.getName()).log(Level.SEVERE, null, ex);
         JOptionPane.showMessageDialog(null, ex);
-    }
-        
-    }
+    } catch (ClassNotFoundException ex) {
+    Logger.getLogger(ClassSQL.class.getName()).log(Level.SEVERE, null, ex);
+    JOptionPane.showMessageDialog(null, ex);
+}
 
-        
+}
+
+//Obtenemos los result set de una consulta        
 public ResultSet getRS() {
     try {
         stmt = conexion.prepareStatement(consSQL);
@@ -69,6 +74,7 @@ public ResultSet getRS() {
     
 }
 
+//Ejecutamos una sentencia de actualización
 public int Ejecutar() {
     try {
         stmt = conexion.prepareStatement(consSQL);
@@ -81,6 +87,7 @@ public int Ejecutar() {
     
 }
 
+//Obtenemos los resultados de una consulta a 2 bases de datos
 public ResultSet State(String bd){
      try {
         st = conexion.createStatement();
@@ -95,8 +102,7 @@ public ResultSet State(String bd){
     
 }
         
-        
-        
+//Cerramos la conección a la base de datos   
 public Connection close(){
     try {
         conexion.close();
@@ -108,6 +114,5 @@ public Connection close(){
     return null;
 }
 
-
    
-    }
+}
