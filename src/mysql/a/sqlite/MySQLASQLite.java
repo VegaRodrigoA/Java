@@ -20,9 +20,8 @@ public class MySQLASQLite {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic heretry {
-        String[] lista = new String[]{"Compras" , 
-            "CondImp", "Diario","limImp","Meses", "planCtas", "Proveedores", "Ventas"};
+        //Creo una lista con los nombres de las tablas que deseo migrar
+        String[] lista = new String[]{"tabla1" ,"tabla2"};
         //String list = "Clientes";
         lista = new String[]{"Diario"}; 
         for (String list :lista){
